@@ -1,0 +1,16 @@
+<div>
+  <table>
+    <tr>
+        <th style="font-size: x-large">Things To Do</th>
+    </tr>
+    <%= for task_group <- @task_groups do %>
+      <tr>
+          <td>
+            <a href={"http://localhost:4000/task_groups/#{task_group.id}"} style="color: black;"><%= task_group.name %> </a><br>
+            <% {completed_task, total_task} = get_completed_and_total_task(task_group) %>
+            <span style="color: grey"><%= "#{completed_task} OF #{total_task} TASKS COMPLETED" %></span>
+          </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

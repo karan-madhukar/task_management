@@ -1,0 +1,52 @@
+<div>
+  <table>
+    <tr>
+      <th style="font-size: x-large"><%= List.first(@tasks).task_group.name %></th>
+    </tr>
+    <%= for task <- @tasks do %>
+      <%= if task.is_completed == true and is_independent_task?(task.id) do %>
+        <tr>
+          <td  style="margin: 0px">
+            <%= form_for @changeset, Routes.task_group_path(@conn, :update_task, task), [method: :patch], fn f -> %>
+              <%= checkbox f, :is_completed, onclick: "handleClick(#{task.id})", value: "#{task.is_completed}" %>
+              <%= task.name %>
+              <%= error_tag f, :active %>
+              <button type="submit" id={"btn-#{task.id}"} style="display: none"></button>
+            <% end %>
+          </td>
+        </tr>
+      <% else %>
+        <%= if task.is_completed == false and is_independent_task?(task.id) do %>
+          <tr>
+            <td>
+              <%= form_for @changeset, Routes.task_group_path(@conn, :update_task, task), [method: :patch, name: ""], fn f -> %>
+                <%= checkbox f, :is_completed, onclick: "handleClick(#{task.id})", value: "#{task.is_completed}" %>
+                <%= task.name %>
+                <%= error_tag f, :active %>
+                <button type="submit" id={"btn-#{task.id}"} style="display: none"></button>
+              <% end %>
+            </td>
+          </tr>
+        <% else %>
+          <tr>
+            <td>
+
+                <%= task.name %>
+
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </table>
+</div>
+
+<script>
+  function handleClick(task_id)
+  {
+  var btn = document.getElementById(`btn-${task_id}`);
+    console.log(btn)
+    console.log(task_id)
+    btn.click()
+  }
+</script>
