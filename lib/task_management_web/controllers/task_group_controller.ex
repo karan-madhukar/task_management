@@ -10,12 +10,14 @@ defmodule TaskManagementWeb.TaskGroupController do
     render(conn, "index.html", task_groups: task_groups)
   end
 
+  @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"task_group_id" => task_group_id}) do
     tasks = TaskGroups.list_tasks(task_group_id)
     changeset = Task.changeset(%Task{}, %{})
     render(conn, "show.html", tasks: tasks, changeset: changeset)
   end
 
+  @spec update_task(Plug.Conn.t(), map) :: Plug.Conn.t()
   def update_task(conn, %{"id" => id, "task" => task_params}) do
     task = TaskGroups.get_task!(id)
     tasks = TaskGroups.list_tasks(task.task_group_id)

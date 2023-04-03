@@ -13,7 +13,7 @@ defmodule TaskManagement.TaskGroups.DependentTask do
   end
 
   def changeset(%DependentTask{} = dependent_task, attrs) do
-   dependent_task
+    dependent_task
     |> cast(attrs, [:task_id, :dependent_id])
     |> validate_required([:task_id, :dependent_id])
     |> foreign_key_constraint(:task_id)
